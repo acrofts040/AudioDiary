@@ -2,6 +2,14 @@ from numpy import record
 import pyaudio
 import wave
 
+
+#TODO:
+# convert to text (maybe convert to mp3)
+# write to diary file
+# loop with commands (i.e "done" or time limits for repeated entry)
+# write with good formatting
+
+
 #HELPER FUNCTIONS
 
 #audio recorder: stores mic data into wav file 
