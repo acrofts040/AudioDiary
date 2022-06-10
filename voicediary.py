@@ -1,13 +1,8 @@
-from numpy import record
 import pyaudio
 import wave
-
-
-#TODO:
-# convert to text (maybe convert to mp3)
-# write to diary file
-# loop with commands (i.e "done" or time limits for repeated entry)
-# write with good formatting
+import speech_recognition as sr
+from os import path
+import datetime
 
 
 #HELPER FUNCTIONS
@@ -51,19 +46,43 @@ def record_audio():
     wf.close()
 
 
-#
-def convert_to_text():
-    print("stub")
+# transcribe output.wav file created by recording
+def transcribe():                                                      
+    AUDIO_FILE = "output.wav"                                       
+    r = sr.Recognizer()
+    with sr.AudioFile(AUDIO_FILE) as source:
+            audio = r.record(source)  # read the audio file                  
+            
+            tscript = str(r.recognize_google(audio))
+            return tscript
 
 
 
-def write_to_diary():
-    print("stub")
+
+
+def write_to_diary(transcription):
+    transcription = transcription[0].upper() + transcription[1:]
+    f = open("diary.txt", "r")
+    date = str(datetime.date.today())
+    sameday = not(date in f.read())
+    f.close()
+
+    f = open("diary.txt", "a")
+    if sameday:
+        f.write("\n\n")
+        f.write(date)
+        f.write(": \n")
+    
+    f.write(transcription+". \n")
+    f.close()
 
 
 
 
 def main():
     record_audio()
+    tscript = transcribe()
+    write_to_diary(tscript)
 
-main()
+if __name__ == '__main__':
+    main()
