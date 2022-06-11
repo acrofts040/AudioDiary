@@ -5,6 +5,11 @@ from os import path
 import datetime
 
 
+#TODO:
+# loop with commands (i.e "done" or time limits for repeated entry)
+# write with good formatting
+
+
 #HELPER FUNCTIONS
 
 #audio recorder: stores mic data into wav file 
@@ -58,21 +63,24 @@ def transcribe():
 
 
 
-
-
+#add transcription to diary in readable manner
 def write_to_diary(transcription):
     transcription = transcription[0].upper() + transcription[1:]
+
+    #open read stream to check for repeat entry
     f = open("diary.txt", "r")
     date = str(datetime.date.today())
     sameday = not(date in f.read())
     f.close()
 
+    #write to file
     f = open("diary.txt", "a")
+
+    #add new date if necessary
     if sameday:
         f.write("\n\n")
         f.write(date)
-        f.write(": \n")
-    
+        f.write(": \n")  
     f.write(transcription+". \n")
     f.close()
 
