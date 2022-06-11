@@ -5,11 +5,6 @@ from os import path
 import datetime
 
 
-#TODO:
-# loop with commands (i.e "done" or time limits for repeated entry)
-# write with good formatting
-
-
 #HELPER FUNCTIONS
 
 #audio recorder: stores mic data into wav file 
