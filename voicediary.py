@@ -3,6 +3,7 @@ import wave
 import speech_recognition as sr
 from os import path
 import datetime
+import sys
 
 
 #HELPER FUNCTIONS
@@ -76,16 +77,25 @@ def write_to_diary(transcription):
         f.write("\n\n")
         f.write(date)
         f.write(": \n")  
-    f.write(transcription+". \n")
+    f.write(transcription + ". \n")
     f.close()
 
 
 
 
 def main():
-    record_audio()
-    tscript = transcribe()
-    write_to_diary(tscript)
+    largs = len(sys.argv)
+
+    if largs == 0:
+        record_audio()
+        tscript = transcribe()
+        write_to_diary(tscript)
+    elif sys.argv[1] == "w" and largs == 1:
+        tscript = input("Enter Text: \n")
+        write_to_diary(tscript)
+    else:
+        print("Err: Unknown Arguments")
+
 
 if __name__ == '__main__':
     main()
